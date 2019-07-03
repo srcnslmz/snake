@@ -2,6 +2,7 @@ var gameCanvas = document.getElementById("gameCanvas");
 var context = gameCanvas.getContext("2d");
 var gameScore = 0;
 var gameSpeed = 100;
+var foodSpeed = 100;
 var directionChange = false;
 var foodCoordinateX;
 var foodCoordinateY;
@@ -10,7 +11,7 @@ var snakeCoordinateY = 0;
 var snake = [ {x: 150, y: 150}, {x: 140, y: 150}, {x: 130, y: 150}, {x: 120, y: 150} ]
 
 goSnake();
-reGenerateFood()
+createFood();
 
 document.addEventListener("keydown", changeDirection);
 
@@ -59,45 +60,44 @@ function goSnake() {
     setTimeout(function onTick() {
         directionChange = false;
         generateCanvas();
-        generateFood();
         generateSnake();
         goSnake();
     }, gameSpeed)
+
+    setTimeout(function onTick() {
+      generateFood();
+  }, foodSpeed)
 }
 
 function generateCanvas() {
-    context.fillStyle = "white";
-    context.strokestyle = "black";
-
-    context.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
-    context.strokeRect(0, 0, gameCanvas.width, gameCanvas.height);
+    drawItem("white", "black", 0, 0, gameCanvas.width, gameCanvas.height);
 }
 
 function generateFood() {
-    context.fillStyle = "black";
-    context.strokestyle = "black";
-
-    context.fillRect(foodCoordinateX, foodCoordinateY, 10, 10);
-    context.strokeRect(foodCoordinateX, foodCoordinateY, 10, 10);
+    drawItem("black", "black", foodCoordinateX, foodCoordinateY, 10, 10);
 }
 
-function reGenerateFood() {
+function createFood() {
     foodCoordinateX = Math.round((Math.random() * (gameCanvas.width)) / 10) * 10;
     foodCoordinateY = Math.round((Math.random() * (gameCanvas.height)) / 10) * 10;
 
     snake.forEach(function isFoodOnSnake(part) {
         if (part.x == foodCoordinateX && part.y == foodCoordinateY) {
-            reGenerateFood();
+          createFood();
         }
       });
 }
 
 function drawSnake(snakePart) {
-    context.fillStyle = "black";
-    context.strokestyle = "black";
+    drawItem("black", "black", snakePart.x, snakePart.y, 10, 10);
+}
 
-    context.fillRect(snakePart.x, snakePart.y, 10, 10);
-    context.strokeRect(snakePart.x, snakePart.y, 10, 10);
+function drawItem(fillColor, strokeColor, coordinateX, coordinateY, width, height) {
+  context.fillStyle = fillColor;
+  context.strokestyle = strokeColor;
+
+  context.fillRect(coordinateX, coordinateY, width, height);
+  context.strokeRect(coordinateX, coordinateY, width, height);
 }
 
 function generateSnake() {
@@ -108,7 +108,7 @@ function generateSnake() {
       gameScore += 1;
       document.getElementById('gameScore').innerHTML = gameScore;
 
-      reGenerateFood();
+      createFood();
     } 
     else {
       snake.pop();
