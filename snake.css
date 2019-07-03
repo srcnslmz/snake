@@ -1,0 +1,16 @@
+#mainCanvas {
+    text-align: left;
+    font-size: 40px;
+    font-family: 'Tahoma,Verdana,Segoe,sans-serif';
+    width: 500px;
+    height: 500px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#score {
+    text-align: left;
+    font-size: 40px;
+}
