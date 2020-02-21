@@ -74,7 +74,7 @@ function generateCanvas() {
 }
 
 function generateFood() {
-    drawItem("black", "black", foodCoordinateX, foodCoordinateY, 10, 10);
+    drawItem("red", "red", foodCoordinateX, foodCoordinateY, 10, 10);
 }
 
 function createFood() {
@@ -89,7 +89,7 @@ function createFood() {
 }
 
 function drawSnake(snakePart) {
-    drawItem("black", "black", snakePart.x, snakePart.y, 10, 10);
+    drawItem("green", "green", snakePart.x, snakePart.y, 10, 10);
 }
 
 function drawItem(fillColor, strokeColor, coordinateX, coordinateY, width, height) {
